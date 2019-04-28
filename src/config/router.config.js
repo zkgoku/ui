@@ -317,6 +317,33 @@ export const asyncRouterMap = [
             ]
           }
         ]
+      },
+      {
+        path: '/system',
+        name: 'system',
+        component: PageView,
+        redirect: '/system/user/index',
+        meta: { title: '系统管理', icon: 'warning' },
+        children: [
+          {
+            path: '/system/user/index',
+            name: 'system_user',
+            component: () => import('@/views/system/user/index'),
+            meta: { title: '用户管理' }
+          }
+          // {
+          //   path: '/system/role/index',
+          //   name: 'system_role',
+          //   component: () => import('@/views/system/role/index'),
+          //   meta: { title: '角色管理', permission: [ 'exception' ] }
+          // },
+          // {
+          //   path: '/system/auth/index',
+          //   name: 'system_auth',
+          //   component: () => import('@/views/list/RoleList'),
+          //   meta: { title: '权限管理', hiddenHeaderContent: true, permission: [ 'exception' ] }
+          // }
+        ]
       }
     ]
   },

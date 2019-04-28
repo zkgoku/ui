@@ -60,3 +60,19 @@ export function saveService (parameter) {
     data: parameter
   })
 }
+
+export function getSystemUserList (parameter) {
+  return axios({
+    url: 'http://localhost:8082/admin/users',
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function saveSystemUser (parameter) {
+  return axios({
+    url: 'http://localhost:8082/admin/user',
+    method: 'post',
+    params: parameter
+  })
+}
