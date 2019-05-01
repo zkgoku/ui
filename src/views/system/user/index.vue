@@ -79,7 +79,7 @@
 import { STable } from '@/components'
 import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
-import { getRoleList, getSystemUserList } from '@/api/manage'
+import { queryUserPage } from '@/api/system.js'
 
 const statusMap = {
   0: {
@@ -121,8 +121,8 @@ export default {
           dataIndex: 'phone'
         },
         {
-          title: '邮箱',
-          dataIndex: 'email'
+          title: '拥有角色',
+          dataIndex: 'roleName'
         },
         {
           title: '状态',
@@ -141,8 +141,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter)
-        return getSystemUserList(Object.assign(parameter, this.queryParam))
+        return queryUserPage(Object.assign(parameter, this.queryParam))
           .then(res => {
             return res.result
           })
@@ -171,7 +170,7 @@ export default {
   },
   created () {
     this.tableOption()
-    getRoleList({ t: new Date() })
+    // queryUserPage({ t: new Date() })
   },
   methods: {
     tableOption () {

@@ -78,14 +78,14 @@
               :labelCol="{lg: {span: 7}, sm: {span: 7}}"
               :required="true"
             >
-              <a-radio-group name="status" :defaultChecked="mdl.status == 1"  v-decorator="['status', {rules: [{required: true, message: '请选择用户状态' }]}]">
-                <a-radio :value="1" >启用</a-radio>
-                <a-radio :value="0">禁用</a-radio>
+              <a-radio-group name="status" :defaultChecked="1" v-decorator="['status', {rules: [{required: true, message: '请选择用户状态' }]}]">
+                <a-radio :value="1" v-model="mdl.status">启用</a-radio>
+                <a-radio :value="0" v-model="mdl.status">禁用</a-radio>
               </a-radio-group>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-divider orientation="left">拥有角色</a-divider>
+        <a-divider orientation="left">角色信息</a-divider>
         <a-row>
           <a-col :span="12">
             <a-form-item
@@ -95,11 +95,12 @@
               :required="false"
               hasFeedback
             >
-              <a-select name="roleId" v-decorator="['roleId', {rules: [{required: false }]}]">
-                <a-select-option value="1">超级管理员</a-select-option>
-                <a-select-option value="2">运维人员</a-select-option>
-                <a-select-option value="3">管理员</a-select-option>
-                <a-select-option value="4">业务员</a-select-option>
+              <a-select
+                name="roleId"
+                v-model="mdl.roleId"
+                :allowClear="true"
+              >
+                <a-select-option v-for="item in allRoles" :key="item.id" :value="item.id" >{{ item.name }}}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -113,7 +114,7 @@
 </template>
 
 <script>
-import { saveSystemUser } from '@/api/manage'
+import { queryAllRole, saveUser, updateUser } from '@/api/system'
 export default {
   data () {
     return {
@@ -128,10 +129,24 @@ export default {
       visible: false,
       confirmLoading: false,
       mdl: {},
-      form: null
+      form: null,
+      roles: [],
+      allRoles: null
     }
   },
+  computed: {
+
+  },
+  created () {
+    this.loadAllRoles()
+  },
   methods: {
+    loadAllRoles: function(){
+      this.allRoles = queryAllRole(null)
+        .then(res => {
+          return res.result
+        });
+    },
     add: function (params) {
       console.log('params', params)
       console.log('params2', Object.assign({}, params))
@@ -145,7 +160,7 @@ export default {
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          saveSystemUser(values)
+          saveUser(values)
             .then(res => {
               console.log('rest', res)
               this.visible = false
