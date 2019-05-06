@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="新增用户"
+    title="新增菜单"
     :width="650"
     :visible="visible"
     :confirmLoading="confirmLoading"
@@ -10,28 +10,28 @@
   >
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-divider orientation="left">用户信息</a-divider>
+        <!--<a-divider orientation="left">菜单信息</a-divider>-->
         <a-row>
           <a-col :span="12">
             <a-form-item
-              label="用户名"
+              label="名称"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
               :required="true"
               hasFeedback
             >
-              <a-input v-decorator="['nickName', {rules: [{required: true, min: 2, max: 10, message: '请输入用户名'}]}]" />
+              <a-input placeholder="请输入名称~" v-decorator="['title', {rules: [{required: true, min: 2, max: 15, message: '请输入长度2-15的菜单名称'}]}]" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item
-              label="登录名"
+              label="标识"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
               :required="true"
               hasFeedback
             >
-              <a-input v-decorator="['username', {rules: [{required: true, min: 4, max: 15, message: '请输入4-15位纯英文登录名'}]}]" />
+              <a-input placeholder="请输入标识~" v-decorator="['code', {rules: [{required: true, min: 2, max: 15, message: '请输入长度2-15的纯英文唯一标识'}]}]" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -39,24 +39,24 @@
         <a-row>
           <a-col :span="12">
             <a-form-item
-              label="密码"
+              label="地址"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
               :required="true"
               hasFeedback
             >
-              <a-input type="password" v-decorator="['password', {rules: [{required: true, min: 6, max: 10, message: '请输入6-10位纯英文登录名'}]}]" />
+              <a-input placeholder="请输入地址~" v-decorator="['path', {rules: [{required: false, min: 2, max: 100, message: '请输入长度2-100的地址'}]}]" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item
-              label="手机号"
+              label="icon"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
               :required="false"
               hasFeedback
             >
-              <a-input v-decorator="['phone', {rules: [{required: false, message: '请输入手机号！'}]}]" />
+              <a-input v-decorator="['icon', {rules: [{required: false}]}]" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -64,43 +64,67 @@
         <a-row>
           <a-col :span="12">
             <a-form-item
-              label="邮箱"
+              label="排序"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
-              :required="false"
               hasFeedback
+              :required="true"
+              help="从小到大排序"
             >
-              <a-input v-decorator="['email', {rules: [{required: false, min: 5, whitespace:true, message: '请输入邮箱'}]}]" />
+              <a-input placeholder="请输入排序值~" type="number" v-decorator="['rank', {rules: [{required: true, message: '请输入排序值'}], initialValue: '1'}]" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item
+              label="类型"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+              :required="true"
+            >
+              <a-radio-group v-decorator="['type', {initialValue: '1'}]">
+                <a-radio value="1">菜单</a-radio>
+                <a-radio value="2">页面</a-radio>
+              </a-radio-group>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :span="12">
+            <a-form-item
+              label="组件"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+              :required="true"
+            >
+              <a-select v-decorator="['component', {initialValue: 'PageView'}]" style="width: 163px;">
+                <a-select-option value="PageView">PageView</a-select-option>
+                <a-select-option value="RouteView">RouteView</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item
               label="状态"
-              :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
               :required="true"
             >
               <a-radio-group v-decorator="['status', {initialValue: '1'}]">
-                <a-radio :value="1" >启用</a-radio>
-                <a-radio :value="0">禁用</a-radio>
+                <a-radio value="1">启用</a-radio>
+                <a-radio value="0">禁用</a-radio>
               </a-radio-group>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-divider orientation="left">拥有角色</a-divider>
         <a-row>
           <a-col :span="12">
             <a-form-item
-              label="角色"
+              label="备注"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
-              <a-select :allowClear="true" v-decorator="['roleId']">
-                <a-select-option v-for="item in allRoles" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
-              </a-select>
+              <a-textarea placeholder="请输入备注~" v-decorator="['remark', {rules: [{required: false, min: 1, max: 50, message: '最大50个字符串'}]}]" :rows="4"/>
             </a-form-item>
-          </a-col>
-          <a-col :span="12">
-
           </a-col>
         </a-row>
       </a-form>
@@ -109,7 +133,7 @@
 </template>
 
 <script>
-  import { queryAllRole, saveUser, updateUser } from '@/api/system.js'
+  import { saveMenu, updateMenu } from '@/api/system.js'
   export default {
     data () {
       return {
@@ -124,55 +148,53 @@
         visible: false,
         confirmLoading: false,
         mdl: {},
-        allRoles: [],
-        userId: null,
+        id: null,
         form: this.$form.createForm(this)
       }
     },
     created () {
-      this.loadRoles();
+
     },
     methods: {
-      add: function () {
-        this.userId = null;
+      add: function (params) {
+        if (params != null){
+          this.mdl = Object.assign({}, params)
+        }else {
+          this.mdl.level = 0
+          this.mdl.id = 0
+        }
+        this.id = null;
         this.visible = true
       },
       edit: function (params) {
         this.mdl = Object.assign({}, params)
         setTimeout(()=>{
-          this.userId = params.userId;
+          this.id = params.id;
           this.form.setFieldsValue({
-            'nickName': params.nickName,
-            'username': params.username,
-            'password': params.password,
-            'phone': params.phone,
-            'email': params.email,
+            'title': params.title,
+            'code': params.code,
+            'path': params.path,
+            'icon': params.icon,
+            'type': params.type,
+            'component': params.component,
             'status': params.status,
-            'roleId': params.roleId
+            'remark': params.remark
           })
         },0)
         this.visible = true
-      },
-      loadRoles: function(){
-        setTimeout(()=>{
-          queryAllRole(null)
-            .then(res => {
-              this.allRoles = res.result
-            })
-        },50)
       },
       handleSubmit: function () {
         const { form: { validateFields } } = this
         this.confirmLoading = true
         validateFields((errors, values) => {
           if (!errors) {
-            values.userId = this.userId;
-            if (this.userId != null){
-              updateUser(values)
+            values.id = this.id;
+
+            if (this.id != null){
+              updateMenu(values)
                 .then(res => {
                   if (res.result.success){
                     this.visible = false
-                    this.confirmLoading = false
                     this.$emit('ok', values)
                     this.$notification['success']({
                       message: '提示',
@@ -187,14 +209,15 @@
                       duration: 5
                     })
                   }
-
                 })
             } else {
-              saveUser(values)
+
+              values.parentId = this.mdl.id
+              values.level = this.mdl.level+1
+              saveMenu(values)
                 .then(res => {
                   if (res.result.success){
                     this.visible = false
-                    this.confirmLoading = false
                     this.$emit('ok', values)
                     this.$notification['success']({
                       message: '提示',
@@ -202,18 +225,15 @@
                       duration: 5
                     })
                   }else {
-                    this.confirmLoading = false
                     this.$notification['error']({
                       message: '提示',
                       description: res.result.message,
                       duration: 5
                     })
                   }
-
                 })
             }
           }
-
           this.confirmLoading = false
         })
       },

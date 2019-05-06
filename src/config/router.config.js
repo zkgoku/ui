@@ -330,19 +330,19 @@ export const asyncRouterMap = [
             name: 'system_user',
             component: () => import('@/views/system/user/index'),
             meta: { title: '用户管理' }
+          },
+          {
+            path: '/system/role/index',
+            name: 'system_role',
+            component: () => import('@/views/system/role/index'),
+            meta: { title: '角色管理'}
+          },
+          {
+            path: '/system/auth/index',
+            name: 'system_auth',
+            component: () => import('@/views/system/menu/index'),
+            meta: { title: '菜单管理'}
           }
-          // {
-          //   path: '/system/role/index',
-          //   name: 'system_role',
-          //   component: () => import('@/views/system/role/index'),
-          //   meta: { title: '角色管理', permission: [ 'exception' ] }
-          // },
-          // {
-          //   path: '/system/auth/index',
-          //   name: 'system_auth',
-          //   component: () => import('@/views/list/RoleList'),
-          //   meta: { title: '权限管理', hiddenHeaderContent: true, permission: [ 'exception' ] }
-          // }
         ]
       }
     ]

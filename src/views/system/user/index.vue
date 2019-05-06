@@ -21,10 +21,6 @@
             <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
               <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
               <a-button style="margin-left: 8px" @click="() => queryParam = {}">重置</a-button>
-              <!--<a @click="toggleAdvanced" style="margin-left: 8px">-->
-                <!--{{ advanced ? '收起' : '展开' }}-->
-                <!--<a-icon :type="advanced ? 'up' : 'down'"/>-->
-              <!--</a>-->
             </span>
           </a-col>
         </a-row>
@@ -32,52 +28,35 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建用户</a-button>
-      <!--<a-button type="dashed" @click="tableOption">{{ optionAlertShow && '关闭' || '开启' }} alert</a-button>-->
-      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-          <!-- lock | unlock -->
-          <!--<a-menu-item key="2"><a-icon type="lock" />禁用</a-menu-item>-->
-        </a-menu>
-        <a-button style="margin-left: 8px">
-          批量操作 <a-icon type="down" />
-        </a-button>
-      </a-dropdown>
+      <a-button type="primary" icon="plus" @click="$refs.createModal.add(null)">新建用户</a-button>
     </div>
 
     <s-table
       ref="table"
       size="default"
-      rowKey="id"
+      rowKey="userId"
       :columns="columns"
       :data="loadData"
-      :alert="options.alert"
-      :rowSelection="options.rowSelection"
     >
-      <span slot="serial" slot-scope="text, record, index">
-        {{ index + 1 }}
-      </span>
       <span slot="status" slot-scope="text">
         <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
       </span>
-
       <span slot="action" slot-scope="text, record">
         <template>
-          <a @click="$refs.createModal.add(record)">编辑</a>
-          <!--<a-divider type="vertical" />-->
-          <!--<a @click="handleSub(record)">下线</a>-->
+          <a @click="$refs.createModal.edit(record)">编辑</a>
+          <a-divider type="vertical" />
+          <a-popconfirm title="你确定要删除吗?" @confirm="handDel" okText="确定" cancelText="再想想~">
+            <a href="#">删除</a>
+          </a-popconfirm>
         </template>
       </span>
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
-    <step-by-step-modal ref="modal" @ok="handleOk"/>
   </a-card>
 </template>
 
 <script>
 import { STable } from '@/components'
-import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
 import { queryUserPage } from '@/api/system.js'
 
@@ -96,8 +75,7 @@ export default {
   name: 'TableList',
   components: {
     STable,
-    CreateForm,
-    StepByStepModal
+    CreateForm
   },
   data () {
     return {
@@ -145,19 +123,7 @@ export default {
           .then(res => {
             return res.result
           })
-      },
-      selectedRowKeys: [],
-      selectedRows: [],
-
-      // custom table alert & rowSelection
-      options: {
-        alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
-        rowSelection: {
-          selectedRowKeys: this.selectedRowKeys,
-          onChange: this.onSelectChange
-        }
-      },
-      optionAlertShow: false
+      }
     }
   },
   filters: {
@@ -169,8 +135,7 @@ export default {
     }
   },
   created () {
-    this.tableOption()
-    // queryUserPage({ t: new Date() })
+
   },
   methods: {
     tableOption () {
@@ -191,32 +156,14 @@ export default {
         this.optionAlertShow = false
       }
     },
-
     handleEdit (record) {
-      console.log(record)
       this.$refs.modal.edit(record)
     },
-    handleSub (record) {
-      if (record.status !== 0) {
-        this.$message.info(`${record.no} 订阅成功`)
-      } else {
-        this.$message.error(`${record.no} 订阅失败，规则已关闭`)
-      }
+    handDel (record){
+      this.$message.success('Click on Yes')
     },
     handleOk () {
       this.$refs.table.refresh()
-    },
-    onSelectChange (selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
-    },
-    toggleAdvanced () {
-      this.advanced = !this.advanced
-    },
-    resetSearchForm () {
-      this.queryParam = {
-        date: moment(new Date())
-      }
     }
   }
 }

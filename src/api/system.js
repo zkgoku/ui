@@ -86,7 +86,7 @@ export function queryAllRole (parameter) {
  */
 export function queryRolePage (parameter) {
   return axios({
-    url: api.user,
+    url: api.role,
     method: 'get',
     params: parameter
   })
@@ -99,7 +99,7 @@ export function queryRolePage (parameter) {
  */
 export function queryRole (parameter) {
   return axios({
-    url: api.user,
+    url: api.role,
     method: 'get',
     params: parameter
   })
@@ -112,7 +112,7 @@ export function queryRole (parameter) {
  */
 export function saveRole (parameter) {
   return axios({
-    url: api.user,
+    url: api.role,
     method: 'post',
     params: parameter
   })
@@ -125,10 +125,74 @@ export function saveRole (parameter) {
  */
 export function updateRole (parameter) {
   return axios({
-    url: api.user,
+    url: api.role,
     method: 'put',
     params: parameter
   })
 }
 
 /** ========菜单相关接口========== **/
+/**
+ * 角色列表分页
+ * @param parameter
+ * @returns {*}
+ */
+export function queryAllMenu (parameter) {
+  return axios({
+    url: api.allMenu,
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
+ * 角色列表分页
+ * @param parameter
+ * @returns {*}
+ */
+export function queryMenuPage (parameter) {
+  return axios({
+    url: api.menu,
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
+ * 角色查询
+ * @param parameter
+ * @returns {*}
+ */
+export function queryMenu (parameter) {
+  return axios({
+    url: api.menu,
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
+ * 角色保存
+ * @param parameter
+ * @returns {*}
+ */
+export function saveMenu (parameter) {
+  return axios({
+    url: api.menu,
+    method: 'post',
+    params: parameter
+  })
+}
+
+/**
+ * 角色更新
+ * @param parameter
+ * @returns {*}
+ */
+export function updateMenu (parameter) {
+  return axios({
+    url: api.menu,
+    method: 'put',
+    params: parameter
+  })
+}
