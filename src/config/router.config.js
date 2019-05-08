@@ -327,19 +327,19 @@ export const asyncRouterMap = [
         children: [
           {
             path: '/system/user/index',
-            name: 'system_user',
+            name: 'user',
             component: () => import('@/views/system/user/index'),
             meta: { title: '用户管理' }
           },
           {
             path: '/system/role/index',
-            name: 'system_role',
+            name: 'role',
             component: () => import('@/views/system/role/index'),
             meta: { title: '角色管理'}
           },
           {
-            path: '/system/auth/index',
-            name: 'system_auth',
+            path: '/system/menu/index',
+            name: 'menu',
             component: () => import('@/views/system/menu/index'),
             meta: { title: '菜单管理'}
           }

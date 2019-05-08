@@ -37,24 +37,27 @@
             <a href="#">删除</a>
           </a-popconfirm>
           <a-divider type="vertical" />
-          <a @click="$refs.createModal.edit(record)">授权</a>
+          <a @click="$refs.authModal.edit(record)">授权</a>
         </template>
       </span>
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
+    <auth-page ref="authModal" @ok="handleOk" />
   </a-card>
 </template>
 
 <script>
   import { STable } from '@/components'
   import CreateForm from './modules/CreateForm'
+  import AuthPage from './modules/AuthPage'
   import { queryRolePage } from '@/api/system.js'
 
   export default {
     name: 'TableList',
     components: {
       STable,
-      CreateForm
+      CreateForm,
+      AuthPage
     },
     data () {
       return {

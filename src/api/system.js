@@ -4,6 +4,7 @@ const api = {
   user: 'http://localhost:8082/admin/user',
   role: 'http://localhost:8082/admin/role',
   allRole: 'http://localhost:8082/admin/roles',
+  roleAuth: 'http://localhost:8082/admin/role/auth',
   menu: 'http://localhost:8082/admin/menu',
   allMenu: 'http://localhost:8082/admin/menus'
 }
@@ -127,6 +128,32 @@ export function updateRole (parameter) {
   return axios({
     url: api.role,
     method: 'put',
+    params: parameter
+  })
+}
+
+/**
+ * 角色权限列表
+ * @param parameter
+ * @returns {*}
+ */
+export function roleAuths (parameter) {
+  return axios({
+    url: api.roleAuth,
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
+ * 权限保存
+ * @param parameter
+ * @returns {*}
+ */
+export function roleAuth (parameter) {
+  return axios({
+    url: api.roleAuth,
+    method: 'post',
     params: parameter
   })
 }
