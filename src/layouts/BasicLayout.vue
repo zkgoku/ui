@@ -48,9 +48,9 @@
       </a-layout-content>
 
       <!-- layout footer -->
-      <a-layout-footer>
-        <global-footer />
-      </a-layout-footer>
+      <!--<a-layout-footer>-->
+        <!--<global-footer />-->
+      <!--</a-layout-footer>-->
 
       <!-- Setting Drawer (show in development mode) -->
       <setting-drawer v-if="!production"></setting-drawer>
@@ -69,7 +69,7 @@ import RouteView from './RouteView'
 import MultiTab from '@/components/MultiTab'
 import SideMenu from '@/components/Menu/SideMenu'
 import GlobalHeader from '@/components/GlobalHeader'
-import GlobalFooter from '@/components/GlobalFooter'
+// import GlobalFooter from '@/components/GlobalFooter'
 import SettingDrawer from '@/components/SettingDrawer'
 import { asyncRouterMap } from '@/config/router.config.js'
 
@@ -81,7 +81,7 @@ export default {
     MultiTab,
     SideMenu,
     GlobalHeader,
-    GlobalFooter,
+    // GlobalFooter,
     SettingDrawer
   },
   data () {

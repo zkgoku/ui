@@ -167,6 +167,7 @@
         this.visible = true
       },
       edit: function (params) {
+        console.log(params)
         this.mdl = Object.assign({}, params)
         setTimeout(()=>{
           this.id = params.id;
@@ -175,9 +176,9 @@
             'code': params.code,
             'path': params.path,
             'icon': params.icon,
-            'type': params.type,
+            'type': params.type+"",
             'component': params.component,
-            'status': params.status,
+            'status': params.status+"",
             'remark': params.remark
           })
         },0)

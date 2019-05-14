@@ -33,7 +33,7 @@
         <template>
           <a @click="$refs.createModal.edit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a-popconfirm title="你确定要删除吗?" @confirm="handDel" okText="确定" cancelText="再想想~">
+          <a-popconfirm title="你确定要删除吗?" @confirm="handDel(record)" okText="确定" cancelText="再想想~">
             <a href="#">删除</a>
           </a-popconfirm>
           <a-divider type="vertical" />
@@ -43,6 +43,7 @@
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
     <auth-page ref="authModal" @ok="handleOk" />
+
   </a-card>
 </template>
 
@@ -50,7 +51,7 @@
   import { STable } from '@/components'
   import CreateForm from './modules/CreateForm'
   import AuthPage from './modules/AuthPage'
-  import { queryRolePage } from '@/api/system.js'
+  import { queryRolePage, deleteRole } from '@/api/system.js'
 
   export default {
     name: 'TableList',
@@ -93,11 +94,16 @@
 
     },
     methods: {
-      handleEdit (record) {
-        // this.$refs.modal.edit(record)
-      },
       handDel (record){
-        this.$message.success('Click on Yes')
+        deleteRole({roleId: record.id})
+          .then(res => {
+            this.$refs.table.refresh()
+            this.$notification['success']({
+              message: '提示',
+              description: "删除成功",
+              duration: 5
+            })
+          })
       },
       handleOk () {
         this.$refs.table.refresh()

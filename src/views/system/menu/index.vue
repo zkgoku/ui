@@ -9,7 +9,6 @@
       rowKey="id"
       :columns="columns"
       :data="loadData"
-      :defaultExpandAllRows=true
     >
       <span slot="status" slot-scope="text">
         <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
@@ -21,26 +20,26 @@
         <template>
           <a @click="$refs.createModal.edit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a @click="$refs.createModal.add(record)" v-if="record.level == 1">添加菜单/页面</a>
-          <a-divider type="vertical" v-if="record.level == 1"/>
-           <a @click="$refs.createModal.add(record)" v-if="record.level == 2">添加页面</a>
-          <a-divider type="vertical" v-if="record.level == 2"/>
-           <a @click="$refs.createModal.edit(record)" v-if="record.level == 3">授权</a>
-          <a-divider type="vertical" v-if="record.level == 3"/>
-          <a-popconfirm title="你确定要删除吗?" @confirm="handDel" okText="确定" cancelText="再想想~">
+           <a @click="$refs.createModal.add(record)" v-if="record.type == 1">添加</a>
+          <a-divider type="vertical" v-if="record.type == 1"/>
+           <a @click="$refs.actionModal.edit(record)" v-if="record.type == 2">授权</a>
+          <a-divider type="vertical" v-if="record.type == 2"/>
+          <a-popconfirm title="你确定要删除吗?" @confirm="handDel(record)" okText="确定" cancelText="再想想~">
             <a href="#">删除</a>
           </a-popconfirm>
         </template>
       </span>
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
+    <action-page ref="actionModal" @ok="handleOk" />
   </a-card>
 </template>
 
 <script>
   import { STable } from '@/components'
   import CreateForm from './modules/CreateForm'
-  import { queryMenuPage } from '@/api/system.js'
+  import ActionPage from './modules/ActionPage'
+  import { queryMenuPage, deleteMenu } from '@/api/system.js'
 
   const statusMap = {
     0: {
@@ -68,15 +67,17 @@
     name: 'TableList',
     components: {
       STable,
-      CreateForm
+      CreateForm,
+      ActionPage
     },
     data () {
       return {
-        mdl: {},
-        // 高级搜索 展开/关闭
-        advanced: false,
         // 查询参数
         queryParam: {},
+        // 数据
+        data: [],
+        // 分页
+        pagination: {},
         // 表头
         columns: [
           {
@@ -139,7 +140,15 @@
         this.$refs.modal.edit(record)
       },
       handDel (record){
-        this.$message.success('Click on Yes')
+        deleteMenu({menuId: record.id})
+          .then(res => {
+            this.$refs.table.refresh()
+            this.$notification['success']({
+              message: '提示',
+              description: "删除成功",
+              duration: 5
+            })
+          })
       },
       handleOk () {
         this.$refs.table.refresh()

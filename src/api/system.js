@@ -1,12 +1,13 @@
 import { axios } from '@/utils/request'
 
 const api = {
-  user: 'http://localhost:8082/admin/user',
-  role: 'http://localhost:8082/admin/role',
-  allRole: 'http://localhost:8082/admin/roles',
-  roleAuth: 'http://localhost:8082/admin/role/auth',
-  menu: 'http://localhost:8082/admin/menu',
-  allMenu: 'http://localhost:8082/admin/menus'
+  user: 'http://localhost:8083/admin/user',
+  role: 'http://localhost:8083/admin/role',
+  allRole: 'http://localhost:8083/admin/roles',
+  roleAuth: 'http://localhost:8083/admin/role/auth',
+  menu: 'http://localhost:8083/admin/menu',
+  allMenu: 'http://localhost:8083/admin/menus',
+  menuAction: 'http://localhost:8083/admin/menuAction',
 }
 
 export default api
@@ -61,6 +62,19 @@ export function updateUser (parameter) {
   return axios({
     url: api.user,
     method: 'put',
+    params: parameter
+  })
+}
+
+/**
+ * 用户删除
+ * @param parameter
+ * @returns {*}
+ */
+export function deleteUser (parameter) {
+  return axios({
+    url: api.user,
+    method: 'delete',
     params: parameter
   })
 }
@@ -133,6 +147,19 @@ export function updateRole (parameter) {
 }
 
 /**
+ * 角色删除
+ * @param parameter
+ * @returns {*}
+ */
+export function deleteRole (parameter) {
+  return axios({
+    url: api.role,
+    method: 'delete',
+    params: parameter
+  })
+}
+
+/**
  * 角色权限列表
  * @param parameter
  * @returns {*}
@@ -160,7 +187,7 @@ export function roleAuth (parameter) {
 
 /** ========菜单相关接口========== **/
 /**
- * 角色列表分页
+ * 列表分页
  * @param parameter
  * @returns {*}
  */
@@ -172,8 +199,9 @@ export function queryAllMenu (parameter) {
   })
 }
 
+
 /**
- * 角色列表分页
+ * 菜单列表分页
  * @param parameter
  * @returns {*}
  */
@@ -185,21 +213,9 @@ export function queryMenuPage (parameter) {
   })
 }
 
-/**
- * 角色查询
- * @param parameter
- * @returns {*}
- */
-export function queryMenu (parameter) {
-  return axios({
-    url: api.menu,
-    method: 'get',
-    params: parameter
-  })
-}
 
 /**
- * 角色保存
+ * 菜单保存
  * @param parameter
  * @returns {*}
  */
@@ -212,7 +228,7 @@ export function saveMenu (parameter) {
 }
 
 /**
- * 角色更新
+ * 菜单更新
  * @param parameter
  * @returns {*}
  */
@@ -220,6 +236,74 @@ export function updateMenu (parameter) {
   return axios({
     url: api.menu,
     method: 'put',
+    params: parameter
+  })
+}
+
+/**
+ * 删除菜单
+ * @param parameter
+ * @returns {*}
+ */
+export function deleteMenu (parameter) {
+  return axios({
+    url: api.menu,
+    method: 'delete',
+    params: parameter
+  })
+}
+
+
+
+/**
+ * 列表分页
+ * @param parameter
+ * @returns {*}
+ */
+export function queryAllMenuAction (parameter) {
+  return axios({
+    url: api.menuAction,
+    method: 'get',
+    params: parameter
+  })
+}
+
+
+/**
+ * 菜单保存
+ * @param parameter
+ * @returns {*}
+ */
+export function saveMenuAction (parameter) {
+  return axios({
+    url: api.menuAction,
+    method: 'post',
+    params: parameter
+  })
+}
+
+/**
+ * 菜单更新
+ * @param parameter
+ * @returns {*}
+ */
+export function updateMenuAction (parameter) {
+  return axios({
+    url: api.menuAction,
+    method: 'put',
+    params: parameter
+  })
+}
+
+/**
+ * 菜单更新
+ * @param parameter
+ * @returns {*}
+ */
+export function deleteMenuAction (parameter) {
+  return axios({
+    url: api.menuAction,
+    method: 'delete',
     params: parameter
   })
 }

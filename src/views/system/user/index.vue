@@ -45,7 +45,7 @@
         <template>
           <a @click="$refs.createModal.edit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a-popconfirm title="你确定要删除吗?" @confirm="handDel" okText="确定" cancelText="再想想~">
+          <a-popconfirm title="你确定要删除吗?" @confirm="handDel(record)" okText="确定" cancelText="再想想~">
             <a href="#">删除</a>
           </a-popconfirm>
         </template>
@@ -58,7 +58,7 @@
 <script>
 import { STable } from '@/components'
 import CreateForm from './modules/CreateForm'
-import { queryUserPage } from '@/api/system.js'
+import { queryUserPage, deleteUser } from '@/api/system.js'
 
 const statusMap = {
   0: {
@@ -160,7 +160,16 @@ export default {
       this.$refs.modal.edit(record)
     },
     handDel (record){
-      this.$message.success('Click on Yes')
+      console.log(record)
+      deleteUser({userId: record.userId})
+        .then(res => {
+          this.$refs.table.refresh()
+          this.$notification['success']({
+            message: '提示',
+            description: "删除成功",
+            duration: 5
+          })
+        })
     },
     handleOk () {
       this.$refs.table.refresh()
