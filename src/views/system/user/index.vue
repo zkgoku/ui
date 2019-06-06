@@ -48,6 +48,10 @@
           <a-popconfirm title="你确定要删除吗?" @confirm="handDel(record)" okText="确定" cancelText="再想想~">
             <a href="#">删除</a>
           </a-popconfirm>
+           <a-divider type="vertical" />
+           <a @click="$refs.createModal.edit(record)">重置密码</a>
+          <a-divider type="vertical" />
+           <a @click="$refs.createModal.edit(record)">查看权限</a>
         </template>
       </span>
     </s-table>
@@ -160,7 +164,6 @@ export default {
       this.$refs.modal.edit(record)
     },
     handDel (record){
-      console.log(record)
       deleteUser({userId: record.userId})
         .then(res => {
           this.$refs.table.refresh()

@@ -1,19 +1,45 @@
 import { axios } from '@/utils/request'
 
 const api = {
+  userInfo: '/userInfo',
+  login: 'http://localhost:8083/admin/login',
+  logout: 'http://localhost:8083/admin/logout',
   user: 'http://localhost:8083/admin/user',
   role: 'http://localhost:8083/admin/role',
   allRole: 'http://localhost:8083/admin/roles',
   roleAuth: 'http://localhost:8083/admin/role/auth',
   menu: 'http://localhost:8083/admin/menu',
   allMenu: 'http://localhost:8083/admin/menus',
-  menuAction: 'http://localhost:8083/admin/menuAction',
+  menuAction: 'http://localhost:8083/admin/menuAction'
 }
 
 export default api
 
 /** ========用户相关接口========== **/
-
+/**
+ * 用户列表分页
+ * @param parameter
+ * @returns {*}
+ */
+export function login (parameter) {
+  return axios({
+    url: api.login,
+    method: 'post',
+    params: parameter
+  })
+}
+/**
+ * 用户列表分页
+ * @param parameter
+ * @returns {*}
+ */
+export function logout (parameter) {
+  return axios({
+    url: api.logout,
+    method: 'post',
+    params: parameter
+  })
+}
 /**
  * 用户列表分页
  * @param parameter
@@ -26,7 +52,6 @@ export function queryUserPage (parameter) {
     params: parameter
   })
 }
-
 /**
  * 用户查询
  * @param parameter
@@ -39,7 +64,6 @@ export function queryUser (parameter) {
     params: parameter
   })
 }
-
 /**
  * 用户保存
  * @param parameter
@@ -52,7 +76,6 @@ export function saveUser (parameter) {
     params: parameter
   })
 }
-
 /**
  * 用户更新
  * @param parameter
@@ -65,7 +88,6 @@ export function updateUser (parameter) {
     params: parameter
   })
 }
-
 /**
  * 用户删除
  * @param parameter
@@ -78,9 +100,7 @@ export function deleteUser (parameter) {
     params: parameter
   })
 }
-
 /** ========角色相关接口========== **/
-
 /**
  * 角色列表分页
  * @param parameter
@@ -93,7 +113,6 @@ export function queryAllRole (parameter) {
     params: parameter
   })
 }
-
 /**
  * 角色列表分页
  * @param parameter
@@ -106,7 +125,6 @@ export function queryRolePage (parameter) {
     params: parameter
   })
 }
-
 /**
  * 角色查询
  * @param parameter
@@ -119,7 +137,6 @@ export function queryRole (parameter) {
     params: parameter
   })
 }
-
 /**
  * 角色保存
  * @param parameter
@@ -132,7 +149,6 @@ export function saveRole (parameter) {
     params: parameter
   })
 }
-
 /**
  * 角色更新
  * @param parameter
@@ -145,7 +161,6 @@ export function updateRole (parameter) {
     params: parameter
   })
 }
-
 /**
  * 角色删除
  * @param parameter
@@ -184,7 +199,6 @@ export function roleAuth (parameter) {
     params: parameter
   })
 }
-
 /** ========菜单相关接口========== **/
 /**
  * 列表分页
@@ -198,8 +212,6 @@ export function queryAllMenu (parameter) {
     params: parameter
   })
 }
-
-
 /**
  * 菜单列表分页
  * @param parameter
@@ -212,8 +224,6 @@ export function queryMenuPage (parameter) {
     params: parameter
   })
 }
-
-
 /**
  * 菜单保存
  * @param parameter
@@ -239,7 +249,6 @@ export function updateMenu (parameter) {
     params: parameter
   })
 }
-
 /**
  * 删除菜单
  * @param parameter
@@ -252,9 +261,6 @@ export function deleteMenu (parameter) {
     params: parameter
   })
 }
-
-
-
 /**
  * 列表分页
  * @param parameter
@@ -267,8 +273,6 @@ export function queryAllMenuAction (parameter) {
     params: parameter
   })
 }
-
-
 /**
  * 菜单保存
  * @param parameter
@@ -281,7 +285,6 @@ export function saveMenuAction (parameter) {
     params: parameter
   })
 }
-
 /**
  * 菜单更新
  * @param parameter
@@ -294,7 +297,6 @@ export function updateMenuAction (parameter) {
     params: parameter
   })
 }
-
 /**
  * 菜单更新
  * @param parameter

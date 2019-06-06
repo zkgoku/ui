@@ -11,7 +11,7 @@ import {
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: '', // api base_url
+  baseURL: 'http://localhost:8083', // api base_url
   timeout: 6000 // 请求超时时间
 })
 
@@ -25,7 +25,7 @@ const err = (error) => {
         description: data.message
       })
     }
-    if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
+    if (error.response.status === 401) {
       notification.error({
         message: 'Unauthorized',
         description: 'Authorization verification failed'
